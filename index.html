@@ -109,7 +109,7 @@ nav {
 }
 .navlinks a { padding-block: 4px; border-bottom: 2px solid transparent; }
 .navlinks a[aria-current="true"] { color: var(--ink); border-bottom-color: var(--accent); }
-section { border-top: 0; padding-block: 72px; }
+section { border-top: 0; padding-block: 72px; min-height: calc(100vh - var(--navh, 56px)); min-height: calc(100svh - var(--navh, 56px)); align-content: start; }
 section.band { background: var(--band); box-shadow: 0 0 0 100vmax var(--band); clip-path: inset(0 -100vmax); }
 .next {
   justify-self: start; display: inline-flex; align-items: center; gap: 8px; margin-top: 8px;
@@ -202,7 +202,8 @@ p { margin: 0; }
 .stage-k { font-family: var(--font-pixel); font-size: 11px; letter-spacing: 0.06em; color: var(--accent); text-transform: uppercase; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .here { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; color: var(--surface); background: var(--accent); border-radius: 999px; padding: 1px 8px; }
 .stage-card ul { margin: 0; padding-left: 18px; font-size: 14px; color: var(--muted); display: grid; gap: 4px; }
-.finds { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.finds { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px 24px; }
+@media (min-width: 760px) { .finds { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .find { border-top: 2px solid var(--ink); padding-top: 12px; display: grid; gap: 6px; align-content: start; }
 .find p { font-size: 15px; color: var(--muted); }
 .find-k { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; justify-self: start; border-radius: 999px; padding: 2px 8px; border: 1px solid currentColor; }
@@ -430,7 +431,7 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
   <section id="findings" class="band" aria-labelledby="findings-h">
     <div class="sec-head">
       <span class="eyebrow">Findings</span>
-      <h2 id="findings-h">Two things I would raise</h2>
+      <h2 id="findings-h">What I would raise</h2>
           </div>
     <div class="finds">
       <div class="find">
@@ -442,6 +443,16 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
         <span class="find-k flag">Raise with the client</span>
         <h3>The end-of-call summary describes the student</h3>
         <p>After each call, Tavus writes a summary of what the camera saw. With emotion recognition set to limited, it still described my appearance, clothes, room and mood. In production the camera faces a child. The parent recap and memory stay about math only, but I would ask whether this summary can be turned off and whether zero data retention fits this client.</p>
+      </div>
+      <div class="find">
+        <span class="find-k flag">Product feedback</span>
+        <h3>Some parents will not want a real face</h3>
+        <p>A parent may not want their child talking to a realistic human face. Tavus supports cartoon or Pixar style human faces as custom faces on paid plans, and audio only with the same tutor and memory. Mascots and animals are not supported, and those are common in products for kids. I would let each family choose.</p>
+      </div>
+      <div class="find">
+        <span class="find-k flag">Found in testing</span>
+        <h3>The call froze in Firefox</h3>
+        <p>In Firefox, the call froze before it started. Tavus has no record of that conversation, so it failed in the browser. Chrome worked in every test. Before a school pilot, I would test on the devices students actually use and send the browser console log to Tavus support.</p>
       </div>
     </div>
     <a class="next" href="#log">Next: Session log <span class="arr" aria-hidden="true">↓</span></a>
@@ -617,7 +628,11 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
 (function () {
   // Land each section flush under the sticky bar
   var bar = document.querySelector('nav');
-  function fit() { document.documentElement.style.scrollPaddingTop = bar.getBoundingClientRect().height + 'px'; }
+  function fit() {
+    var h = bar.getBoundingClientRect().height + 'px';
+    document.documentElement.style.scrollPaddingTop = h;
+    document.documentElement.style.setProperty('--navh', h);
+  }
   fit();
   window.addEventListener('resize', fit);
   var links = {};
