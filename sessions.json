@@ -1,5 +1,13 @@
 [
  {
+  "id": "c130395d7524241d",
+  "when": "2026-10-14T03:03:54.202237Z",
+  "session": "Lesson",
+  "length_sec": 38,
+  "summary": "The student asked to see a fraction. We displayed three-fourths in a stacked format, but the student said it looked weird and left before we could continue.",
+  "next": "Choose a preferred fraction format and practice reading and writing basic fractions (like 1/2, 2/3, 3/4)."
+ },
+ {
   "id": "c5e79e0dd526840a",
   "when": "2026-10-14T02:56:41.967632Z",
   "session": "Session",
