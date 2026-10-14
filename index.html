@@ -81,6 +81,22 @@ h1 em { font-style: normal; color: var(--accent); }
 
 /* Sections */
 section { padding-block: 48px; border-top: 1px solid var(--line); display: grid; gap: 24px; }
+
+/* Side menu on wide screens */
+.layout { display: block; }
+.rail { display: none; }
+@media (min-width: 1100px) {
+  .wrap { max-width: 1240px; }
+  .layout { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 48px; align-items: start; }
+  .rail { display: block; position: sticky; top: 96px; z-index: 5; padding-block: 72px 0; }
+  .navlinks { display: none; }
+}
+.rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.rail a { display: flex; gap: 12px; align-items: baseline; padding: 8px 10px; border-radius: 8px; text-decoration: none; color: var(--muted); font-size: 14px; border-left: 2px solid transparent; }
+.rail a:hover { color: var(--ink); background: color-mix(in srgb, var(--surface) 70%, transparent); }
+.rail a[aria-current="true"] { color: var(--ink); font-weight: 600; border-left-color: var(--accent); background: var(--surface); }
+.rail .n { font-family: var(--font-mono); font-size: 12px; color: var(--accent); min-width: 12px; }
+
 /* Sections as bands, sticky nav, next links */
 html { scroll-padding-top: 76px; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
@@ -261,9 +277,9 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
   <nav aria-label="Page">
     <div class="brand"><span class="dot" aria-hidden="true"></span>Charlie Ballet <span class="x">for</span> Tavus</div>
     <div class="navlinks">
-      <a href="#watch">Watch</a>
-      <a href="#approach">Approach</a>
-      <a href="#try">Try it</a>
+      <a href="#watch">Loom</a>
+      <a href="#approach">Client</a>
+      <a href="#try">Try Hana</a>
       <a href="#findings">Findings</a>
       <a href="#log">Session log</a>
     </div>
@@ -284,6 +300,17 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
     </div>
   </header>
 
+  <div class="layout">
+  <aside class="rail" aria-label="Sections">
+    <ol>
+      <li><a href="#watch"><span class="n">1</span>Loom</a></li>
+      <li><a href="#approach"><span class="n">2</span>Client</a></li>
+      <li><a href="#try"><span class="n">3</span>Try Hana</a></li>
+      <li><a href="#findings"><span class="n">4</span>Findings</a></li>
+      <li><a href="#log"><span class="n">5</span>Session log</a></li>
+    </ol>
+  </aside>
+  <main>
   <section id="watch" aria-labelledby="watch-h">
     <div class="sec-head">
       <span class="eyebrow">Watch</span>
@@ -294,7 +321,7 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
       <span class="ph-tag">PLACEHOLDER</span>
       <p class="muted">Loom goes here</p>
     </div>
-    <a class="next" href="#approach">Next: Approach <span class="arr" aria-hidden="true">↓</span></a>
+    <a class="next" href="#approach">Next: Client <span class="arr" aria-hidden="true">↓</span></a>
   </section>
 
   <section id="approach" class="band" aria-labelledby="approach-h">
@@ -356,7 +383,7 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
         </ul>
       </li>
     </ol>
-    <a class="next" href="#try">Next: Try it <span class="arr" aria-hidden="true">↓</span></a>
+    <a class="next" href="#try">Next: Try Hana <span class="arr" aria-hidden="true">↓</span></a>
   </section>
 
   <section id="try" aria-labelledby="try-h">
@@ -429,6 +456,9 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
     <div class="log-stats" id="log-stats"></div>
     <div class="log" id="log-list"></div>
   </section>
+
+  </main>
+  </div>
 
   <footer>
     <span>Built for the Tavus Customer Engineer take-home</span>
@@ -586,13 +616,16 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
 <script>
 (function () {
   var links = {};
-  document.querySelectorAll('.navlinks a').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+  document.querySelectorAll('.navlinks a, .rail a').forEach(function (a) {
+    var k = a.getAttribute('href').slice(1);
+    (links[k] = links[k] || []).push(a);
+  });
   if (!('IntersectionObserver' in window)) return;
   var obs = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (!e.isIntersecting) return;
-      Object.keys(links).forEach(function (k) { links[k].removeAttribute('aria-current'); });
-      if (links[e.target.id]) links[e.target.id].setAttribute('aria-current', 'true');
+      Object.keys(links).forEach(function (k) { links[k].forEach(function (a) { a.removeAttribute('aria-current'); }); });
+      (links[e.target.id] || []).forEach(function (a) { a.setAttribute('aria-current', 'true'); });
     });
   }, { rootMargin: '-45% 0px -50% 0px' });
   document.querySelectorAll('section[id]').forEach(function (sec) { obs.observe(sec); });
