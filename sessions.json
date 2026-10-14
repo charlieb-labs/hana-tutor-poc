@@ -1,1 +1,66 @@
-[]
+[
+ {
+  "id": "c345ab613ec5d4f8",
+  "when": "2026-10-14T02:30:37.244589Z",
+  "session": "My week",
+  "length_sec": 281,
+  "summary": "The student shared a fraction homework set and we reviewed how to subtract fractions with different denominators using a common denominator. We focused on problem 2 (3/4 − 1/2), identifying a common denominator of 4 and rewriting 1/2 as 2/4 before subtracting. We also discussed showing only the specific step being worked on to support focusing on one part at a time.",
+  "next": "Finish problem 2 and then correct the other items that appear to have denominator/answer-format issues (e.g., problems 4, 6, and 8)."
+ },
+ {
+  "id": "c0a59a16832ec494",
+  "when": "2026-10-14T01:50:47.907480Z",
+  "session": "My week",
+  "length_sec": 300,
+  "summary": "The student shared a Grade 5 fractions worksheet and asked for feedback on what to work on. We reviewed why you can’t add denominators directly (e.g., 2/3 + 1/4) and practiced finding a common denominator by multiplying 3×4=12. The student requested step-by-step visual support for each step, and we started setting up problem 8 (pizza word problem) at the end.",
+  "next": "Practice several problems converting fractions to a common denominator (including word problems) and then simplifying the final answer."
+ },
+ {
+  "id": "cc2c1f710a2bc4d5",
+  "when": "2026-10-14T01:48:43.069607Z",
+  "session": "My week",
+  "length_sec": 69,
+  "summary": "The session focused on getting set up to share the student’s screen so the tutor could see the homework. No specific math problems were shown or worked on before the session ended.",
+  "next": "Successfully share the homework screen and begin working through the first problem together."
+ },
+ {
+  "id": "c6e093d2824ce468",
+  "when": "2026-10-13T05:49:25.788942Z",
+  "session": "Lesson 2 · Adding fractions",
+  "length_sec": 183,
+  "summary": "We worked through the example 1/2 + 1/3 by finding a common denominator and converting each fraction to an equivalent fraction with denominator 6. The student practiced identifying the multiplication factor needed to reach the common denominator, then added the numerators to get the final sum.",
+  "next": "Do a few additional practice problems adding fractions with unlike denominators, including simplifying when possible."
+ },
+ {
+  "id": "c72e2c492ca2f419",
+  "when": "2026-10-13T05:36:14.576618Z",
+  "session": "Lesson 2 · Adding fractions",
+  "length_sec": 80,
+  "summary": "We practiced listing multiples to find a common denominator, then choosing the least common denominator. We started converting 1/2 and 1/3 into equivalent fractions with denominator 6.",
+  "next": "Finish 1/2 + 1/3 by creating equivalent fractions with denominator 6 and then add; repeat with a few more unlike-denominator examples."
+ },
+ {
+  "id": "cfd382456c2a441e",
+  "when": "2026-10-13T05:35:38.911758Z",
+  "session": "Lesson 2 · Adding fractions",
+  "length_sec": 5,
+  "summary": "The session only included the tutor greeting and asking if the student was ready to start. There was no student work shown or discussed.",
+  "next": "Start with finding least common denominators, then add/subtract and simplify."
+ },
+ {
+  "id": "cdf544289f10b481",
+  "when": "2026-10-13T05:34:19.520942Z",
+  "session": "Lesson 2 · Adding fractions",
+  "length_sec": 73,
+  "summary": "We reviewed the steps for adding/subtracting fractions with different denominators. We started an example (1/2 + 1/3) and practiced finding a common denominator by listing multiples of 2 and 3.",
+  "next": "Continue the example through converting both fractions to the common denominator and adding the numerators, then try 2–3 more problems."
+ },
+ {
+  "id": "c0bc0a127c13e41a",
+  "when": "2026-10-13T01:27:41.593987Z",
+  "session": "Session",
+  "length_sec": 535,
+  "summary": "",
+  "next": ""
+ }
+]
