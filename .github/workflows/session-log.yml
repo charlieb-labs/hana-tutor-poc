@@ -1,0 +1,28 @@
+name: Session log
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  repository_dispatch:
+    types: [hana-call-ended]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: session-log
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update sessions.json from Tavus
+        env:
+          TAVUS_API_KEY: ${{ secrets.TAVUS_API_KEY }}
+          WAIT_FOR_NEW: ${{ github.event_name == 'repository_dispatch' && '1' || '0' }}
+        run: python3 scripts/update_log.py
+      - name: Commit if changed
+        run: |
+          git config user.name "session-log-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add sessions.json
+          git diff --cached --quiet || (git commit -m "Update session log" && git push)

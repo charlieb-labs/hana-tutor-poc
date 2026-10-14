@@ -1,3 +1,9 @@
 *
 !index.html
 !.gitignore
+!sessions.json
+!.github/
+!.github/workflows/
+!.github/workflows/session-log.yml
+!scripts/
+!scripts/update_log.py

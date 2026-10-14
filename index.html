@@ -444,8 +444,8 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
 
 <script>
 (function () {
-  // Web app URL from the Apps Script deployment. The log refreshes on its own after each call.
-  var LOG_URL = "YOUR_APPS_SCRIPT_URL";
+  // sessions.json is updated by a GitHub Action after each call.
+  var LOG_URL = "https://raw.githubusercontent.com/charlieb-labs/hana-tutor-poc/main/sessions.json";
   var list = document.getElementById('log-list');
   function fmtWhen(iso) {
     var d = new Date(String(iso).replace(/(\.\d{3})\d+/, '$1'));
@@ -497,9 +497,11 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
     });
   }
   function load() {
-    if (LOG_URL.indexOf('YOUR_') === 0) { message('The session log connects once the log URL is added.'); return; }
-    fetch(LOG_URL).then(function (r) { return r.json(); })
-      .then(function (d) { render(d.sessions || []); })
+    fetch(LOG_URL + '?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.json(); })
+      .then(function (d) {
+        var rows = (Array.isArray(d) ? d : (d.sessions || [])).filter(function (s) { return s.summary; });
+        render(rows);
+      })
       .catch(function () { if (!list.querySelector('.log-row')) message('The session log could not load right now.'); });
   }
   load();
