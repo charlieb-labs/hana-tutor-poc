@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Math Tutor PAL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Silkscreen&display=swap">
+<style>
+/* Layout: single centered column, Tavus-style warm ground with a faint grid behind the hero, pink as the one accent */
+:root {
+  --bg: #F5F2EC;
+  --surface: #FBFAF7;
+  --ink: #1C1A1F;
+  --muted: #69636E;
+  --line: #E2DDD4;
+  --accent: #D9475F;
+  --accent-soft: #F8E2E6;
+  --ok: #2F7A55;
+  --font-display: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-pixel: "Silkscreen", "Geist Mono", ui-monospace, monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  padding-inline: 20px;
+  padding-block: 0 64px;
+}
+.wrap { max-width: 1040px; margin-inline: auto; }
+a { color: var(--ink); text-decoration-color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+/* Nav */
+nav {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  padding-block: 20px; border-bottom: 1px solid var(--line);
+}
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -0.01em; }
+.brand .dot { width: 10px; height: 10px; background: var(--accent); border-radius: 2px; }
+.brand .x { color: var(--muted); font-weight: 400; }
+.navlinks { display: flex; gap: 20px; flex-wrap: wrap; font-size: 14px; }
+.navlinks a { text-decoration: none; color: var(--muted); }
+.navlinks a:hover { color: var(--ink); }
+
+/* Hero */
+.hero {
+  position: relative; padding-block: 56px 40px;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: center top;
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
+          mask-image: linear-gradient(to bottom, #000 55%, transparent);
+}
+.hero-inner { position: relative; display: grid; gap: 20px; max-width: 760px; }
+.eyebrow {
+  font-family: var(--font-pixel); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--accent);
+}
+h1 {
+  font-family: var(--font-display); font-weight: 600; font-size: clamp(36px, 6vw, 60px);
+  line-height: 1.04; letter-spacing: -0.03em; margin: 0; text-wrap: balance;
+}
+h1 em { font-style: normal; color: var(--accent); }
+.lede { font-size: 19px; color: var(--muted); max-width: 60ch; margin: 0; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; font-family: var(--font-mono); font-size: 13px; }
+.chip {
+  border: 1px solid var(--line); background: var(--surface); padding: 4px 10px; border-radius: 999px; color: var(--ink);
+}
+.chip.ph { border-style: dashed; border-color: var(--accent); color: var(--accent); background: transparent; }
+
+/* Sections */
+section { padding-block: 48px; border-top: 1px solid var(--line); display: grid; gap: 24px; }
+.sec-head { display: grid; gap: 8px; max-width: 680px; }
+h2 { font-family: var(--font-display); font-size: clamp(24px, 3.4vw, 32px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; margin: 0; text-wrap: balance; }
+h3 { font-size: 17px; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+p { margin: 0; }
+.muted { color: var(--muted); }
+.prose { max-width: 65ch; display: grid; gap: 12px; }
+
+/* Placeholder treatment */
+.ph-box {
+  border: 1.5px dashed var(--accent); border-radius: 14px; background: color-mix(in srgb, var(--accent-soft) 45%, transparent);
+  display: grid; place-items: center; text-align: center; gap: 10px; padding: 24px; color: var(--ink);
+}
+.ph-tag {
+  font-family: var(--font-pixel); font-size: 11px; letter-spacing: 0.06em; color: var(--accent);
+  border: 1px solid var(--accent); padding: 2px 8px; border-radius: 4px; background: var(--surface);
+}
+.ph-inline { color: var(--accent); font-family: var(--font-mono); font-size: 0.92em; }
+
+/* Video */
+.video { aspect-ratio: 16 / 9; width: 100%; max-width: 100%; }
+.video .play {
+  width: 64px; height: 64px; border-radius: 50%; background: var(--accent); display: grid; place-items: center;
+}
+.video .play::after { content: ""; border-left: 18px solid var(--surface); border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 5px; }
+.chapters { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+.chapter { border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 12px 14px; display: grid; gap: 2px; }
+.chapter .t { font-family: var(--font-mono); font-size: 12px; color: var(--accent); font-variant-numeric: tabular-nums; }
+.chapter .n { font-size: 14px; font-weight: 500; }
+
+/* Try it */
+.try { display: grid; gap: 24px; max-width: 880px; }
+.try-main { display: grid; gap: 14px; min-width: 0; }
+.modes { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.mode {
+  font: inherit; text-align: left; cursor: pointer; display: grid; gap: 2px;
+  background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px;
+}
+.mode:hover { border-color: var(--ink); }
+.mode[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.mode:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.mode-k { font-family: var(--font-pixel); font-size: 11px; letter-spacing: 0.06em; color: var(--accent); text-transform: uppercase; }
+.mode-t { font-weight: 600; font-size: 16px; }
+.mode-d { font-size: 13px; color: var(--muted); }
+.picker { display: grid; gap: 14px; }
+.topic { display: grid; gap: 10px; }
+.topic-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.topic-head h3 { font-size: 18px; }
+.topic-meta { font-size: 13px; color: var(--muted); }
+.lessons { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; }
+.topic.soon { border: 1px dashed var(--line); border-radius: 12px; padding: 12px 16px; }
+.topic.soon h3 { color: var(--muted); }
+.tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); border-radius: 999px; padding: 2px 8px; }
+.mode.week { background: var(--accent-soft); }
+.log { display: grid; border-top: 1px solid var(--ink); }
+.log-row { display: grid; grid-template-columns: 150px 150px 70px minmax(0, 1fr); gap: 16px; padding-block: 14px; border-bottom: 1px solid var(--line); font-size: 14px; align-items: start; }
+.log-row.head { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding-block: 10px; }
+.log-when, .log-len { font-family: var(--font-mono); font-size: 13px; font-variant-numeric: tabular-nums; }
+.log-type { font-weight: 600; }
+.log-sum { display: grid; gap: 6px; }
+.log-next { color: var(--muted); }
+.log-next b { color: var(--ink); font-weight: 600; }
+.log-empty { padding-block: 18px; color: var(--muted); }
+@media (max-width: 760px) {
+  .log-row { grid-template-columns: 1fr 1fr; gap: 6px 12px; }
+  .log-row.head { display: none; }
+  .log-sum { grid-column: 1 / -1; }
+}
+.why { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+.risk { max-width: 70ch; font-size: 15px; color: var(--muted); border-left: 3px solid var(--accent); padding-left: 14px; }
+.risk b { color: var(--ink); }
+.journey-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+.journey-head h3 { font-size: 18px; }
+.journey { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.stage-card { border: 1px solid var(--line); background: var(--surface); border-radius: 12px; padding: 16px; display: grid; gap: 8px; align-content: start; }
+.stage-card.now { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.stage-k { font-family: var(--font-pixel); font-size: 11px; letter-spacing: 0.06em; color: var(--accent); text-transform: uppercase; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.here { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; color: var(--surface); background: var(--accent); border-radius: 999px; padding: 1px 8px; }
+.stage-card ul { margin: 0; padding-left: 18px; font-size: 14px; color: var(--muted); display: grid; gap: 4px; }
+.stage {
+  aspect-ratio: 16 / 9; width: 100%; max-width: 100%; border-radius: 14px; overflow: hidden;
+  background: var(--surface); border: 1px solid var(--line); display: grid; place-items: center;
+}
+.stage-msg { color: var(--muted); padding: 24px; text-align: center; }
+.limits { display: grid; gap: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.limits div { display: flex; justify-content: space-between; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--line); font-size: 14px; }
+.limits div:first-child { border-top: 0; }
+.limits .k { color: var(--muted); }
+.limits .v { font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; }
+.tip { font-size: 14px; color: var(--muted); }
+
+/* Decisions */
+.draft-note { display: inline-flex; gap: 8px; align-items: center; font-size: 14px; color: var(--muted); }
+.decisions { display: grid; border-top: 1px solid var(--ink); }
+.dec { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.4fr); gap: 20px; padding-block: 18px; border-bottom: 1px solid var(--line); }
+.dec .lbl { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 4px; }
+.dec .chose { font-weight: 600; }
+.dec .over { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--accent); }
+
+/* Architecture */
+.arch { overflow-x: auto; }
+.flow { display: grid; grid-template-columns: minmax(200px, 1fr) 32px minmax(260px, 1.4fr) 32px minmax(200px, 1fr); align-items: stretch; min-width: 760px; }
+.node { border: 1px solid var(--line); background: var(--surface); border-radius: 12px; padding: 16px; display: grid; gap: 10px; align-content: start; }
+.node.core { border-color: var(--ink); }
+.node .who { font-family: var(--font-pixel); font-size: 11px; letter-spacing: 0.06em; color: var(--accent); }
+.node ul { margin: 0; padding-left: 18px; font-size: 14px; display: grid; gap: 4px; }
+.node .model { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.arrow { display: grid; place-items: center; color: var(--accent); font-family: var(--font-mono); font-size: 18px; }
+.layers { display: grid; gap: 6px; }
+.layer { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; border-top: 1px dashed var(--line); padding-top: 6px; }
+.layer:first-child { border-top: 0; padding-top: 0; }
+.planned { font-family: var(--font-mono); font-size: 11px; color: var(--accent); border: 1px dashed var(--accent); border-radius: 4px; padding: 0 6px; }
+
+/* Cards grid (compliance, discovery) */
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.item { border-top: 2px solid var(--ink); padding-top: 12px; display: grid; gap: 6px; }
+.item p { font-size: 15px; color: var(--muted); }
+ol.qs { margin: 0; padding-left: 22px; display: grid; gap: 10px; max-width: 70ch; }
+ol.qs li::marker { font-family: var(--font-mono); color: var(--accent); }
+
+/* About */
+.about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 32px; align-items: start; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.stat { border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 14px; display: grid; gap: 2px; }
+.stat .num { font-family: var(--font-mono); font-size: 26px; font-weight: 500; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.stat .cap { font-size: 13px; color: var(--muted); line-height: 1.35; }
+
+footer { border-top: 1px solid var(--line); padding-block: 28px 0; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 14px; color: var(--muted); }
+footer .mono { font-family: var(--font-mono); font-size: 12px; }
+
+@media (max-width: 760px) {
+  .try, .about { grid-template-columns: 1fr; }
+  .dec { grid-template-columns: 1fr; gap: 8px; }
+  .stats { grid-template-columns: 1fr; }
+  .hero { padding-block: 40px 28px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .video .play { transition: transform .2s ease; }
+  .video:hover .play { transform: scale(1.06); }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav aria-label="Page">
+    <div class="brand"><span class="dot" aria-hidden="true"></span>Charlie Ballet <span class="x">for</span> Tavus</div>
+    <div class="navlinks">
+      <a href="#watch">Watch</a>
+      <a href="#approach">Approach</a>
+      <a href="#try">Try it</a>
+      <a href="#log">Session log</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="eyebrow">Customer Engineer take-home</span>
+      <h1>A math tutor that <em>sees the worksheet</em> and remembers the student.</h1>
+      <p class="lede">Scenario: an edtech client wants an AI tutor for every grade and every course. A student signs up and meets their teacher. Before building all of it, we agreed on a proof of concept with one grade and one course. This page is that PoC: Grade 5 fractions, built on Tavus.</p>
+      <div class="meta">
+        <span class="chip">Grade 5</span>
+        <span class="chip">Fractions unit</span>
+        <span class="chip">Tavus CVI</span>
+        <span class="chip">Hosted embed</span>
+        <span class="chip">Memory per student</span>
+      </div>
+    </div>
+  </header>
+
+
+
+  <section id="watch" aria-labelledby="watch-h">
+    <div class="sec-head">
+      <span class="eyebrow">Watch</span>
+      <h2 id="watch-h">The PoC in under 5 minutes</h2>
+    </div>
+    <div class="ph-box video" role="img" aria-label="Loom video placeholder">
+      <div class="play" aria-hidden="true"></div>
+      <span class="ph-tag">PLACEHOLDER</span>
+      <p class="muted">Loom goes here</p>
+    </div>
+  </section>
+
+  <section id="approach" aria-labelledby="approach-h">
+    <div class="sec-head">
+      <span class="eyebrow">Approach</span>
+      <h2 id="approach-h">Why an AI tutor, and how we get there</h2>
+    </div>
+
+    <div class="why">
+      <div class="item"><h3>Unlimited patience</h3><p>It explains the same step as many times as the student needs.</p></div>
+      <div class="item"><h3>No judgment</h3><p>A student can be wrong without feeling embarrassed in front of anyone.</p></div>
+      <div class="item"><h3>Always available</h3><p>After school, before a test, or at 9pm on a Sunday.</p></div>
+      <div class="item"><h3>Face to face</h3><p>Video and on-screen questions keep a student engaged. This is the hypothesis the PoC tests.</p></div>
+    </div>
+    <p class="risk"><b>It can still get things wrong.</b> In testing, Hana once praised a wrong answer. A prompt rule fixed it, and it is why the parent recap is a draft a person reviews before it is sent.</p>
+
+    <div class="journey-head">
+      <h3>Customer journey</h3>
+      <span class="draft-note"><span class="ph-tag">DRAFT</span> Confirm the stages and criteria.</span>
+    </div>
+    <ol class="journey">
+      <li class="stage-card">
+        <span class="stage-k">Discovery</span>
+        <h3>Agree on the problem</h3>
+        <ul>
+          <li>Who buys: the school or the parent</li>
+          <li>What success looks like after 30 days</li>
+          <li>Stable student IDs so memory follows the student</li>
+          <li>Curriculum, and what parents need to see</li>
+          <li>Privacy: consent, data retention, EU students</li>
+        </ul>
+      </li>
+      <li class="stage-card now">
+        <span class="stage-k">PoC <span class="here">You are here</span></span>
+        <h3>One grade, one course</h3>
+        <ul>
+          <li>Grade 5 fractions, 4 lessons</li>
+          <li>One tutor, Hana, with memory per student</li>
+          <li>Question cards and screen share</li>
+          <li>A parent recap after every session</li>
+        </ul>
+      </li>
+      <li class="stage-card">
+        <span class="stage-k">Pilot</span>
+        <h3>Real students, real numbers</h3>
+        <ul>
+          <li>A small group of Grade 5 students</li>
+          <li>Measure lessons finished and return visits</li>
+          <li>Parents rate the recaps</li>
+        </ul>
+      </li>
+      <li class="stage-card">
+        <span class="stage-k">Scale</span>
+        <h3>Every grade, every course</h3>
+        <ul>
+          <li>A tutor for each grade and course</li>
+          <li>Student accounts with stable IDs</li>
+          <li>Live session log and email delivery</li>
+        </ul>
+      </li>
+    </ol>
+  </section>
+
+  <section id="try" aria-labelledby="try-h">
+    <div class="sec-head">
+      <span class="eyebrow">Try it</span>
+      <h2 id="try-h">Talk to the tutor</h2>
+      <p class="muted">Have a worksheet or a math problem on paper ready. Use headphones.</p>
+    </div>
+    <div class="try">
+      <div class="try-main">
+        <div class="picker">
+          <div class="topic">
+            <div class="topic-head">
+              <h3>Fractions</h3>
+              <span class="topic-meta">Grade 5 · 4 lessons</span>
+            </div>
+            <div class="lessons" role="group" aria-label="Fractions lessons">
+              <button type="button" class="mode" data-mode="equivalent"><span class="mode-k">Lesson 1</span><span class="mode-t">Equivalent fractions</span><span class="mode-d">Warm-up review</span></button>
+              <button type="button" class="mode" data-mode="adding"><span class="mode-k">Lesson 2</span><span class="mode-t">Adding with unlike denominators</span><span class="mode-d">Find a common denominator, then add</span></button>
+              <button type="button" class="mode" data-mode="subtracting"><span class="mode-k">Lesson 3</span><span class="mode-t">Subtracting with unlike denominators</span><span class="mode-d">Same steps, then subtract</span></button>
+              <button type="button" class="mode" data-mode="word"><span class="mode-k">Lesson 4</span><span class="mode-t">Fraction word problems</span><span class="mode-d">Read, pick the operation, solve</span></button>
+            </div>
+          </div>
+          <div class="topic soon" aria-disabled="true">
+            <div class="topic-head">
+              <h3>Decimals</h3>
+              <span class="tag">Coming soon</span>
+            </div>
+          </div>
+          <button type="button" class="mode week" data-mode="week">
+            <span class="mode-k">Work on my week</span>
+            <span class="mode-t">Bring this week's homework</span>
+            <span class="mode-d">Share your screen or show it to the camera</span>
+          </button>
+        </div>
+        <div class="stage" id="stage" aria-live="polite">
+          <p class="stage-msg" id="stage-msg">Pick a lesson or "Work on my week" to meet Hana.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+
+  <section id="log" aria-labelledby="log-h">
+    <div class="sec-head">
+      <span class="eyebrow">Session log</span>
+      <h2 id="log-h">Every session with Hana</h2>
+      <p class="muted">Every session with Hana, added automatically a minute or two after it ends. Sessions shown are tests, with me playing a Grade 5 student. Only the math recap appears here, never names or video.</p>
+    </div>
+    <div class="log" id="log-list"></div>
+  </section>
+
+  <footer>
+    <span>Built for the Tavus Customer Engineer take-home</span>
+    <span class="mono">October 2026</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  // Paste the deployment ID from PAL Maker here.
+  var DEPLOYMENT_ID = "f0c9f998-cf0b-4ef6-a913-a156739f75d4";
+  var NO_ASK = " Do not ask which session type the student wants.";
+  var CONTEXT = {
+    equivalent: "Session type: Lesson. Lesson 1 of the Grade 5 fractions unit: equivalent fractions, as a warm-up review. Show how multiplying the top and bottom by the same number makes an equivalent fraction. One worked example, then three practice problems." + NO_ASK,
+    adding: "Session type: Lesson. Lesson 2 of the Grade 5 fractions unit: adding fractions with unlike denominators. Find a common denominator, convert, then add. One worked example, then three practice problems." + NO_ASK,
+    subtracting: "Session type: Lesson. Lesson 3 of the Grade 5 fractions unit: subtracting fractions with unlike denominators. Same steps as adding, then subtract. One worked example, then three practice problems." + NO_ASK,
+    word: "Session type: Lesson. Lesson 4 of the Grade 5 fractions unit: word problems that add or subtract fractions with unlike denominators. Put each problem on the canvas, help the student pick the operation, then solve it step by step. One worked example, then three practice problems." + NO_ASK,
+    week: "Session type: My week. Ask the student what they worked on in math this week. Ask them to share their screen or show their work to the camera, read the problem back, then pick one thing to practice." + NO_ASK
+  };
+  var stage = document.getElementById('stage');
+  var msg = document.getElementById('stage-msg');
+  var buttons = document.querySelectorAll('.mode');
+  var scriptLoaded = false;
+
+  // Optional fixed memory tag for demos: ?student=demo-student-1
+  var student = null;
+  try { student = new URLSearchParams(location.search).get('student'); } catch (e) {}
+
+  function loadEmbedScript(done) {
+    if (scriptLoaded) { done(); return; }
+    var s = document.createElement('script');
+    s.src = "https://unpkg.com/@tavus/embed";
+    s.onload = function () { scriptLoaded = true; done(); };
+    s.onerror = function () { showMsg("The Tavus embed could not load here. Open the hosted page instead."); };
+    document.head.appendChild(s);
+  }
+  function showMsg(text) {
+    stage.innerHTML = "";
+    var p = document.createElement('p');
+    p.className = 'stage-msg';
+    p.textContent = text;
+    stage.appendChild(p);
+  }
+  function start(mode) {
+    buttons.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.mode === mode ? 'true' : 'false'); });
+    if (DEPLOYMENT_ID.indexOf("YOUR_") === 0) {
+      showMsg("Hana goes live here once the deployment ID is added.");
+      return;
+    }
+    loadEmbedScript(function () {
+      stage.innerHTML = "";
+      var el = document.createElement('tavus-embed');
+      el.setAttribute('deployment-id', DEPLOYMENT_ID);
+      el.setAttribute('conversational-context', CONTEXT[mode]);
+      if (student) el.setAttribute('memory-stores', DEPLOYMENT_ID + "-" + student);
+      stage.appendChild(el);
+    });
+  }
+  buttons.forEach(function (b) {
+    b.setAttribute('aria-pressed', 'false');
+    b.addEventListener('click', function () { start(b.dataset.mode); });
+  });
+})();
+</script>
+
+<script>
+(function () {
+  // Web app URL from the Apps Script deployment. The log refreshes on its own after each call.
+  var LOG_URL = "YOUR_APPS_SCRIPT_URL";
+  var list = document.getElementById('log-list');
+  function fmtWhen(iso) {
+    var d = new Date(String(iso).replace(/(\.\d{3})\d+/, '$1'));
+    if (isNaN(d)) return iso;
+    return d.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+  }
+  function fmtLen(sec) {
+    if (sec == null || isNaN(sec)) return '';
+    var m = Math.floor(sec / 60), s = Math.round(sec % 60);
+    return m + ':' + (s < 10 ? '0' : '') + s;
+  }
+  function cell(cls, text) {
+    var el = document.createElement('div');
+    el.className = cls;
+    el.textContent = text;
+    return el;
+  }
+  function message(text) {
+    list.innerHTML = '';
+    list.appendChild(cell('log-empty', text));
+  }
+  function render(sessions) {
+    if (!sessions.length) { message('No sessions yet. Each session appears here a minute or two after it ends.'); return; }
+    list.innerHTML = '';
+    var head = document.createElement('div');
+    head.className = 'log-row head';
+    ['When', 'Session', 'Length', 'Summary and next step'].forEach(function (t) { head.appendChild(cell('', t)); });
+    list.appendChild(head);
+    sessions.forEach(function (s) {
+      var row = document.createElement('div');
+      row.className = 'log-row';
+      row.appendChild(cell('log-when', fmtWhen(s.when)));
+      row.appendChild(cell('log-type', s.session || 'Session'));
+      row.appendChild(cell('log-len', fmtLen(s.length_sec)));
+      var sum = document.createElement('div');
+      sum.className = 'log-sum';
+      sum.appendChild(cell('', s.summary));
+      if (s.next) {
+        var n = document.createElement('div');
+        n.className = 'log-next';
+        var b = document.createElement('b');
+        b.textContent = 'Next: ';
+        n.appendChild(b);
+        n.appendChild(document.createTextNode(s.next));
+        sum.appendChild(n);
+      }
+      row.appendChild(sum);
+      list.appendChild(row);
+    });
+  }
+  function load() {
+    if (LOG_URL.indexOf('YOUR_') === 0) { message('The session log connects once the log URL is added.'); return; }
+    fetch(LOG_URL).then(function (r) { return r.json(); })
+      .then(function (d) { render(d.sessions || []); })
+      .catch(function () { if (!list.querySelector('.log-row')) message('The session log could not load right now.'); });
+  }
+  load();
+  setInterval(load, 60000);
+})();
+</script>
+</body>
+</html>
