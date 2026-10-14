@@ -195,6 +195,25 @@ p { margin: 0; }
 .why { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
 .risk { max-width: 70ch; font-size: 15px; color: var(--muted); border-left: 3px solid var(--accent); padding-left: 14px; }
 .risk b { color: var(--ink); }
+.pick { width: 100%; border-collapse: collapse; font-size: 15px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.pick th, .pick td { text-align: left; vertical-align: top; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+.pick thead th { font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.pick tbody tr:last-child > * { border-bottom: 0; }
+.pick tbody th { font-weight: 600; }
+.pick span { display: block; font-size: 13px; font-weight: 400; color: var(--muted); }
+.pick b { font-weight: 600; }
+.pick b.y { color: var(--ok); }
+.pick tr.win > * { background: var(--accent-soft); }
+.pick tr.win th { box-shadow: inset 3px 0 0 var(--accent); }
+@media (max-width: 640px) {
+  .pick thead { display: none; }
+  .pick, .pick tbody, .pick tr, .pick th, .pick td { display: block; }
+  .pick tr { border-bottom: 1px solid var(--line); padding-block: 6px; }
+  .pick tbody tr:last-child { border-bottom: 0; }
+  .pick th, .pick td { border: 0; padding: 6px 16px; }
+  .pick td { display: grid; grid-template-columns: 112px 1fr; column-gap: 12px; }
+  .pick td::before { content: attr(data-k); grid-row: span 2; font-size: 13px; color: var(--muted); }
+}
 .journey-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
 .journey-head h3 { font-size: 18px; }
 .journey { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
@@ -280,6 +299,7 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
     <div class="brand"><span class="dot" aria-hidden="true"></span>Charlie Ballet <span class="x">for</span> Tavus</div>
     <div class="navlinks">
       <a href="#watch">Loom</a>
+      <a href="#why">Why a tutor</a>
       <a href="#approach">Client</a>
       <a href="#try">Try Hana</a>
       <a href="#findings">Findings</a>
@@ -306,10 +326,11 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
   <aside class="rail" aria-label="Sections">
     <ol>
       <li><a href="#watch"><span class="n">1</span>Loom</a></li>
-      <li><a href="#approach"><span class="n">2</span>Client</a></li>
-      <li><a href="#try"><span class="n">3</span>Try Hana</a></li>
-      <li><a href="#findings"><span class="n">4</span>Findings</a></li>
-      <li><a href="#log"><span class="n">5</span>Session log</a></li>
+      <li><a href="#why"><span class="n">2</span>Why a tutor</a></li>
+      <li><a href="#approach"><span class="n">3</span>Client</a></li>
+      <li><a href="#try"><span class="n">4</span>Try Hana</a></li>
+      <li><a href="#findings"><span class="n">5</span>Findings</a></li>
+      <li><a href="#log"><span class="n">6</span>Session log</a></li>
     </ol>
   </aside>
   <main>
@@ -323,10 +344,31 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
       <span class="ph-tag">PLACEHOLDER</span>
       <p class="muted">Loom goes here</p>
     </div>
+    <a class="next" href="#why">Next: Why a tutor <span class="arr" aria-hidden="true">↓</span></a>
+  </section>
+
+  <section id="why" class="band" aria-labelledby="why-h">
+    <div class="sec-head">
+      <span class="eyebrow">Why a tutor</span>
+      <h2 id="why-h">Four ideas, one test</h2>
+      <p class="muted">Before building, I checked four ideas against three questions. Does the face matter? Does it need to see? Does it remember?</p>
+    </div>
+    <table class="pick">
+      <thead>
+        <tr><th scope="col">Idea</th><th scope="col">Face matters</th><th scope="col">Needs to see</th><th scope="col">Remembers</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Life coach<span>Daily or weekly check-in on goals</span></th><td data-k="Face matters"><b>Weak</b><span>Mostly talk</span></td><td data-k="Needs to see"><b>No</b></td><td data-k="Remembers"><b class="y">Yes</b><span>Tracks the goals</span></td></tr>
+        <tr><th scope="row">Cooking lesson<span>Steps and ingredients, live</span></th><td data-k="Face matters"><b>No</b><span>Voice-only would do</span></td><td data-k="Needs to see"><b class="y">Yes</b><span>Could catch a mistake</span></td><td data-k="Remembers"><b>No</b></td></tr>
+        <tr><th scope="row">Tech company PAL<span>API help or a platform walkthrough</span></th><td data-k="Face matters"><b>Weak</b><span>Docs or a chatbot could do it</span></td><td data-k="Needs to see"><b>Sometimes</b></td><td data-k="Remembers"><b>No</b></td></tr>
+        <tr class="win"><th scope="row">Grade 5 tutor<span>The one I built</span></th><td data-k="Face matters"><b class="y">Yes</b><span>Keeps a student engaged</span></td><td data-k="Needs to see"><b class="y">Yes</b><span>Reads the worksheet</span></td><td data-k="Remembers"><b class="y">Yes</b><span>Picks up where the student left off</span></td></tr>
+      </tbody>
+    </table>
+    <p class="risk"><b>The tutor is the only one with three yeses.</b> It uses all of Tavus: the face, perception and memory.</p>
     <a class="next" href="#approach">Next: Client <span class="arr" aria-hidden="true">↓</span></a>
   </section>
 
-  <section id="approach" class="band" aria-labelledby="approach-h">
+  <section id="approach" aria-labelledby="approach-h">
     <div class="sec-head">
       <span class="eyebrow">Client</span>
       <h2 id="approach-h">The client, and how we get there</h2>
@@ -388,7 +430,7 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
     <a class="next" href="#try">Next: Try Hana <span class="arr" aria-hidden="true">↓</span></a>
   </section>
 
-  <section id="try" aria-labelledby="try-h">
+  <section id="try" class="band" aria-labelledby="try-h">
     <div class="sec-head">
       <span class="eyebrow">Try it</span>
       <h2 id="try-h">Talk to the tutor</h2>
@@ -429,7 +471,7 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
     <a class="next" href="#findings">Next: Findings <span class="arr" aria-hidden="true">↓</span></a>
   </section>
 
-  <section id="findings" class="band" aria-labelledby="findings-h">
+  <section id="findings" aria-labelledby="findings-h">
     <div class="sec-head">
       <span class="eyebrow">Findings</span>
       <h2 id="findings-h">What I would raise</h2>
@@ -459,7 +501,7 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
     <a class="next" href="#log">Next: Session log <span class="arr" aria-hidden="true">↓</span></a>
   </section>
 
-  <section id="log" aria-labelledby="log-h">
+  <section id="log" class="band" aria-labelledby="log-h">
     <div class="sec-head">
       <span class="eyebrow">Session log</span>
       <h2 id="log-h">Every session with Hana</h2>
