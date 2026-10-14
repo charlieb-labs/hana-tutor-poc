@@ -141,6 +141,11 @@ p { margin: 0; }
 .log-sum { display: grid; gap: 6px; }
 .log-next { color: var(--muted); }
 .log-next b { color: var(--ink); font-weight: 600; }
+.log-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.log-stat { border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 12px 14px; display: grid; gap: 2px; }
+.log-stat .num { font-family: var(--font-mono); font-size: 24px; font-variant-numeric: tabular-nums; }
+.log-stat .cap { font-size: 13px; color: var(--muted); }
+.log-stuck b, .log-next b { color: var(--ink); font-weight: 600; }
 .log-empty { padding-block: 18px; color: var(--muted); }
 @media (max-width: 760px) {
   .log-row { grid-template-columns: 1fr 1fr; gap: 6px 12px; }
@@ -158,6 +163,13 @@ p { margin: 0; }
 .stage-k { font-family: var(--font-pixel); font-size: 11px; letter-spacing: 0.06em; color: var(--accent); text-transform: uppercase; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .here { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; color: var(--surface); background: var(--accent); border-radius: 999px; padding: 1px 8px; }
 .stage-card ul { margin: 0; padding-left: 18px; font-size: 14px; color: var(--muted); display: grid; gap: 4px; }
+.finds { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.find { border-top: 2px solid var(--ink); padding-top: 12px; display: grid; gap: 6px; align-content: start; }
+.find p { font-size: 15px; color: var(--muted); }
+.find-k { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; justify-self: start; border-radius: 999px; padding: 2px 8px; border: 1px solid currentColor; }
+.find-k.fixed { color: var(--ok); }
+.find-k.flag { color: var(--accent); }
+.find-k.ok { color: var(--muted); }
 .stage {
   aspect-ratio: 16 / 9; width: 100%; max-width: 100%; border-radius: 14px; overflow: hidden;
   background: var(--surface); border: 1px solid var(--line); display: grid; place-items: center;
@@ -229,6 +241,7 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
       <a href="#watch">Watch</a>
       <a href="#approach">Approach</a>
       <a href="#try">Try it</a>
+      <a href="#findings">Findings</a>
       <a href="#log">Session log</a>
     </div>
   </nav>
@@ -369,12 +382,32 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
 
 
 
+  <section id="findings" aria-labelledby="findings-h">
+    <div class="sec-head">
+      <span class="eyebrow">Findings</span>
+      <h2 id="findings-h">Two things I would raise</h2>
+          </div>
+    <div class="finds">
+      <div class="find">
+        <span class="find-k flag">Product feedback</span>
+        <h3>Cards cannot show math fractions</h3>
+        <p>A Grade 5 student needs to see fractions written the way their worksheet shows them. I tested three ways: slashes work, a Markdown rule draws a bar across the whole card, and code blocks are not supported. My ask to Tavus: math rendering on canvas cards. It would help every education customer.</p>
+      </div>
+      <div class="find">
+        <span class="find-k flag">Raise with the client</span>
+        <h3>The end-of-call summary describes the student</h3>
+        <p>After each call, Tavus writes a summary of what the camera saw. With emotion recognition set to limited, it still described my appearance, clothes, room and mood. In production the camera faces a child. The parent recap and memory stay about math only, but I would ask whether this summary can be turned off and whether zero data retention fits this client.</p>
+      </div>
+    </div>
+  </section>
+
   <section id="log" aria-labelledby="log-h">
     <div class="sec-head">
       <span class="eyebrow">Session log</span>
       <h2 id="log-h">Every session with Hana</h2>
-      <p class="muted">Every session with Hana, added automatically a minute or two after it ends. Sessions shown are tests, with me playing a Grade 5 student. Only the math recap appears here, never names or video.</p>
+      <p class="muted">How the client would track the PoC. Each session is added automatically a few minutes after it ends. Sessions shown are tests, with me playing a Grade 5 student. Only the math recap appears here, never names or video.</p>
     </div>
+    <div class="log-stats" id="log-stats"></div>
     <div class="log" id="log-list"></div>
   </section>
 
@@ -467,12 +500,28 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
     list.innerHTML = '';
     list.appendChild(cell('log-empty', text));
   }
+  function stats(sessions) {
+    var box = document.getElementById('log-stats');
+    box.innerHTML = '';
+    if (!sessions.length) return;
+    var lens = sessions.map(function (s) { return s.length_sec; }).filter(function (n) { return n != null; });
+    var avg = lens.length ? lens.reduce(function (a, b) { return a + b; }, 0) / lens.length : null;
+    var week = sessions.filter(function (s) { return s.session === 'My week'; }).length;
+    [[sessions.length, 'sessions'], [fmtLen(avg), 'average length'], [sessions.length - week, 'lessons'], [week, 'homework reviews']].forEach(function (p) {
+      var d = document.createElement('div');
+      d.className = 'log-stat';
+      d.appendChild(cell('num', String(p[0])));
+      d.appendChild(cell('cap', p[1]));
+      box.appendChild(d);
+    });
+  }
   function render(sessions) {
-    if (!sessions.length) { message('No sessions yet. Each session appears here a minute or two after it ends.'); return; }
+    stats(sessions);
+    if (!sessions.length) { message('No sessions yet. Each session appears here a few minutes after it ends.'); return; }
     list.innerHTML = '';
     var head = document.createElement('div');
     head.className = 'log-row head';
-    ['When', 'Session', 'Length', 'Summary and next step'].forEach(function (t) { head.appendChild(cell('', t)); });
+    ['When', 'Session', 'Length', 'Where the student got stuck, and what is next'].forEach(function (t) { head.appendChild(cell('', t)); });
     list.appendChild(head);
     sessions.forEach(function (s) {
       var row = document.createElement('div');
@@ -482,7 +531,13 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
       row.appendChild(cell('log-len', fmtLen(s.length_sec)));
       var sum = document.createElement('div');
       sum.className = 'log-sum';
-      sum.appendChild(cell('', s.summary));
+      var stuck = document.createElement('div');
+      stuck.className = 'log-stuck';
+      var sb = document.createElement('b');
+      sb.textContent = 'Stuck on: ';
+      stuck.appendChild(sb);
+      stuck.appendChild(document.createTextNode(s.stuck || s.summary));
+      sum.appendChild(stuck);
       if (s.next) {
         var n = document.createElement('div');
         n.className = 'log-next';

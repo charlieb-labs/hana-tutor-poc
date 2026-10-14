@@ -40,6 +40,7 @@ def load():
     except (FileNotFoundError, ValueError): return []
 
 def update(rows):
+    rows[:] = [r for r in rows if "stuck" in r]  # refetch rows saved before the stuck field existed
     seen = {r["id"] for r in rows}
     added = 0
     convs = get("/conversations?limit=50").get("data", [])
@@ -63,7 +64,8 @@ def update(rows):
         rows.append({"id": c["conversation_id"], "when": d.get("created_at"),
                      "session": session_name(line(plain, "Session"), d.get("conversational_context")),
                      "length_sec": round((ended - start).total_seconds()) if start and ended else None,
-                     "summary": line(plain, "Summary"), "next": line(plain, "Next session")})
+                     "summary": line(plain, "Summary"), "stuck": line(plain, "Got stuck on"),
+                     "next": line(plain, "Next session")})
         added += 1
     return added
 
