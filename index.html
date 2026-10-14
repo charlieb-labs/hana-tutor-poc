@@ -88,7 +88,7 @@ section { padding-block: 48px; border-top: 1px solid var(--line); display: grid;
 @media (min-width: 1100px) {
   .wrap { max-width: 1240px; }
   .layout { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 48px; align-items: start; }
-  .rail { display: block; position: sticky; top: 96px; z-index: 5; padding-block: 72px 0; }
+  .rail { display: block; position: sticky; top: 60px; z-index: 5; padding-block: 72px 0; }
   .navlinks { display: none; }
 }
 .rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
@@ -98,7 +98,7 @@ section { padding-block: 48px; border-top: 1px solid var(--line); display: grid;
 .rail .n { font-family: var(--font-mono); font-size: 12px; color: var(--accent); min-width: 12px; }
 
 /* Sections as bands, sticky nav, next links */
-html { scroll-padding-top: 76px; }
+html { scroll-padding-top: 56px; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 nav {
   position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
@@ -109,7 +109,7 @@ nav {
 }
 .navlinks a { padding-block: 4px; border-bottom: 2px solid transparent; }
 .navlinks a[aria-current="true"] { color: var(--ink); border-bottom-color: var(--accent); }
-section { border-top: 0; padding-block: 72px; scroll-margin-top: 76px; }
+section { border-top: 0; padding-block: 72px; }
 section.band { background: var(--band); box-shadow: 0 0 0 100vmax var(--band); clip-path: inset(0 -100vmax); }
 .next {
   justify-self: start; display: inline-flex; align-items: center; gap: 8px; margin-top: 8px;
@@ -615,6 +615,11 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
 
 <script>
 (function () {
+  // Land each section flush under the sticky bar
+  var bar = document.querySelector('nav');
+  function fit() { document.documentElement.style.scrollPaddingTop = bar.getBoundingClientRect().height + 'px'; }
+  fit();
+  window.addEventListener('resize', fit);
   var links = {};
   document.querySelectorAll('.navlinks a, .rail a').forEach(function (a) {
     var k = a.getAttribute('href').slice(1);
