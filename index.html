@@ -18,6 +18,7 @@
   --accent: #D9475F;
   --accent-soft: #F8E2E6;
   --ok: #2F7A55;
+  --band: #EDE7DC;
   --font-display: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-body: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
@@ -80,6 +81,28 @@ h1 em { font-style: normal; color: var(--accent); }
 
 /* Sections */
 section { padding-block: 48px; border-top: 1px solid var(--line); display: grid; gap: 24px; }
+/* Sections as bands, sticky nav, next links */
+html { scroll-padding-top: 76px; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  box-shadow: 0 0 0 100vmax color-mix(in srgb, var(--bg) 92%, transparent); clip-path: inset(0 -100vmax);
+  padding-block: 14px;
+}
+.navlinks a { padding-block: 4px; border-bottom: 2px solid transparent; }
+.navlinks a[aria-current="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+section { border-top: 0; padding-block: 72px; scroll-margin-top: 76px; }
+section.band { background: var(--band); box-shadow: 0 0 0 100vmax var(--band); clip-path: inset(0 -100vmax); }
+.next {
+  justify-self: start; display: inline-flex; align-items: center; gap: 8px; margin-top: 8px;
+  font-family: var(--font-mono); font-size: 13px; color: var(--muted); text-decoration: none;
+  border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; background: var(--surface);
+}
+.next:hover { color: var(--ink); border-color: var(--ink); }
+.next .arr { color: var(--accent); }
+
 .sec-head { display: grid; gap: 8px; max-width: 680px; }
 h2 { font-family: var(--font-display); font-size: clamp(24px, 3.4vw, 32px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; margin: 0; text-wrap: balance; }
 h3 { font-size: 17px; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
@@ -261,8 +284,6 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
     </div>
   </header>
 
-
-
   <section id="watch" aria-labelledby="watch-h">
     <div class="sec-head">
       <span class="eyebrow">Watch</span>
@@ -273,9 +294,10 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
       <span class="ph-tag">PLACEHOLDER</span>
       <p class="muted">Loom goes here</p>
     </div>
+    <a class="next" href="#approach">Next: Approach <span class="arr" aria-hidden="true">↓</span></a>
   </section>
 
-  <section id="approach" aria-labelledby="approach-h">
+  <section id="approach" class="band" aria-labelledby="approach-h">
     <div class="sec-head">
       <span class="eyebrow">Approach</span>
       <h2 id="approach-h">Why an AI tutor, and how we get there</h2>
@@ -334,6 +356,7 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
         </ul>
       </li>
     </ol>
+    <a class="next" href="#try">Next: Try it <span class="arr" aria-hidden="true">↓</span></a>
   </section>
 
   <section id="try" aria-labelledby="try-h">
@@ -374,15 +397,10 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
         </div>
       </div>
     </div>
+    <a class="next" href="#findings">Next: Findings <span class="arr" aria-hidden="true">↓</span></a>
   </section>
 
-
-
-
-
-
-
-  <section id="findings" aria-labelledby="findings-h">
+  <section id="findings" class="band" aria-labelledby="findings-h">
     <div class="sec-head">
       <span class="eyebrow">Findings</span>
       <h2 id="findings-h">Two things I would raise</h2>
@@ -399,6 +417,7 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
         <p>After each call, Tavus writes a summary of what the camera saw. With emotion recognition set to limited, it still described my appearance, clothes, room and mood. In production the camera faces a child. The parent recap and memory stay about math only, but I would ask whether this summary can be turned off and whether zero data retention fits this client.</p>
       </div>
     </div>
+    <a class="next" href="#log">Next: Session log <span class="arr" aria-hidden="true">↓</span></a>
   </section>
 
   <section id="log" aria-labelledby="log-h">
@@ -561,6 +580,22 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
   }
   load();
   setInterval(load, 60000);
+})();
+</script>
+
+<script>
+(function () {
+  var links = {};
+  document.querySelectorAll('.navlinks a').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+  if (!('IntersectionObserver' in window)) return;
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      Object.keys(links).forEach(function (k) { links[k].removeAttribute('aria-current'); });
+      if (links[e.target.id]) links[e.target.id].setAttribute('aria-current', 'true');
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  document.querySelectorAll('section[id]').forEach(function (sec) { obs.observe(sec); });
 })();
 </script>
 </body>
