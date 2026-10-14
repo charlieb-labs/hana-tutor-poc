@@ -1,5 +1,23 @@
 [
  {
+  "id": "c2f6ee9f827694d0",
+  "when": "2026-10-14T18:16:09.738423Z",
+  "session": "My week",
+  "length_sec": 14,
+  "summary": "The session ended after the tutor asked what the student has been working on this week. There was not enough information to identify a specific math topic or skills practiced.",
+  "stuck": "N/A",
+  "next": "Identify the current math topic and work through 1–2 sample problems."
+ },
+ {
+  "id": "caabad1415848422",
+  "when": "2026-10-14T18:14:45.215988Z",
+  "session": "My week",
+  "length_sec": 78,
+  "summary": "The student attempted to share their screen to show a fractions homework PDF. Most of the session time was spent troubleshooting screen sharing in Firefox, and no specific problems were worked through step-by-step in the transcript.",
+  "stuck": "Getting the screen share to work smoothly in Firefox",
+  "next": "Walk through 2–3 worksheet problems step-by-step (finding common denominators and simplifying)."
+ },
+ {
   "id": "ce743f9f3b194496",
   "when": "2026-10-14T03:20:45.396578Z",
   "session": "Lesson 4 · Word problems",
