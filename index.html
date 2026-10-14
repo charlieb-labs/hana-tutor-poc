@@ -52,15 +52,16 @@ nav {
 .navlinks a:hover { color: var(--ink); }
 
 /* Hero */
-.hero {
-  position: relative; padding-block: 56px 40px;
+.hero { position: relative; padding-block: 56px 40px; }
+.hero::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
   background-image:
     linear-gradient(var(--line) 1px, transparent 1px),
     linear-gradient(90deg, var(--line) 1px, transparent 1px);
   background-size: 48px 48px;
   background-position: center top;
-  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
-          mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent);
+          mask-image: linear-gradient(to bottom, #000 40%, transparent);
 }
 .hero-inner { position: relative; display: grid; gap: 20px; max-width: 760px; }
 .eyebrow {
@@ -315,7 +316,7 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
   <section id="watch" aria-labelledby="watch-h">
     <div class="sec-head">
       <span class="eyebrow">Watch</span>
-      <h2 id="watch-h">The PoC in under 5 minutes</h2>
+      <h2 id="watch-h">The PoC, walked through</h2>
     </div>
     <div class="ph-box video" role="img" aria-label="Loom video placeholder">
       <div class="play" aria-hidden="true"></div>
@@ -391,7 +392,7 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
     <div class="sec-head">
       <span class="eyebrow">Try it</span>
       <h2 id="try-h">Talk to the tutor</h2>
-      <p class="muted">Have a worksheet or a math problem on paper ready. Use headphones.</p>
+      <p class="muted">Have a worksheet ready to share on screen. Use headphones and Chrome.</p>
     </div>
     <div class="try">
       <div class="try-main">
@@ -452,7 +453,7 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
       <div class="find">
         <span class="find-k flag">Found in testing</span>
         <h3>The call froze in Firefox</h3>
-        <p>In Firefox, the call froze before it started. Tavus has no record of that conversation, so it failed in the browser. Chrome worked in every test. Before a school pilot, I would test on the devices students actually use and send the browser console log to Tavus support.</p>
+        <p>In Firefox, the call started but froze when I shared my screen. Chrome worked in every test. Before a school pilot, I would test on the devices students actually use and send the conversation ID and the browser console log to Tavus support.</p>
       </div>
     </div>
     <a class="next" href="#log">Next: Session log <span class="arr" aria-hidden="true">↓</span></a>
