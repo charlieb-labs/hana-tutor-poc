@@ -1,11 +1,21 @@
 [
  {
+  "id": "ce743f9f3b194496",
+  "when": "2026-10-14T03:20:45.396578Z",
+  "session": "Lesson 4 · Word problems",
+  "length_sec": 90,
+  "summary": "We worked through a word problem about pizza to decide whether to add or subtract fractions. The student correctly chose subtraction for “giving away” and identified that different denominators require finding a common denominator. We started rewriting 1/2 as 3/6 and began the step of rewriting 1/3 with denominator 6 before the session ended.",
+  "stuck": "Determining how to rewrite 1/3 so it becomes sixths (what to multiply top and bottom by)",
+  "next": "Finish the pizza problem (3/6 − 2/6) and practice 2–3 more word problems with unlike denominators."
+ },
+ {
   "id": "c866c289b2e25492",
   "when": "2026-10-14T03:05:12.991657Z",
-  "session": "Session",
+  "session": "Lesson",
   "length_sec": 37,
-  "summary": "",
-  "next": ""
+  "summary": "The session was very short and focused on verifying how fractions appear on the student’s screen. Hana showed the fraction 3/4 written with a slash, and the student confirmed it looked correct.",
+  "stuck": "N/A (no multi-step math work attempted)",
+  "next": "Begin a fraction lesson (e.g., comparing fractions or equivalent fractions) now that the display format is confirmed."
  },
  {
   "id": "c130395d7524241d",
@@ -13,23 +23,26 @@
   "session": "Lesson",
   "length_sec": 38,
   "summary": "The student asked to see a fraction. We displayed three-fourths in a stacked format, but the student said it looked weird and left before we could continue.",
+  "stuck": "Interpreting/accepting the stacked fraction display format on-screen",
   "next": "Choose a preferred fraction format and practice reading and writing basic fractions (like 1/2, 2/3, 3/4)."
  },
  {
   "id": "c5e79e0dd526840a",
   "when": "2026-10-14T02:56:41.967632Z",
-  "session": "Session",
+  "session": "Lesson",
   "length_sec": 51,
-  "summary": "",
-  "next": ""
+  "summary": "We tested how to display the fraction three fourths in the chat. The student confirmed that using a slash (3/4) looked correct. We tried an alternative with a horizontal bar using dashes, but the student said it still appeared on the same line, so we agreed to stick with the slash.",
+  "stuck": "Getting a stacked fraction (numerator over denominator) to render instead of staying on one line",
+  "next": "Start a short fraction lesson (equivalent fractions or adding fractions) using slash notation."
  },
  {
   "id": "c58db998ef057433",
   "when": "2026-10-14T02:45:24.645468Z",
   "session": "My week",
   "length_sec": 173,
-  "summary": "",
-  "next": ""
+  "summary": "The student shared a teacher-assigned worksheet with 8 fraction problems (addition/subtraction and one word problem). We checked which answers were correct and flagged problems 2, 4, 6, and 8 to revisit because the subtraction step looked like subtracting numerators and denominators separately. We started reworking problem 2 (3/4 − 1/2) by finding a common denominator and rewriting 1/2 as an equivalent fraction with denominator 4.",
+  "stuck": "Converting 1/2 to an equivalent fraction with denominator 4, and the general step of subtracting fractions after making denominators match",
+  "next": "Finish correcting #2, then apply the same common-denominator method to #4, #6, and the #8 word problem."
  },
  {
   "id": "c345ab613ec5d4f8",
@@ -37,6 +50,7 @@
   "session": "My week",
   "length_sec": 281,
   "summary": "The student shared a fraction homework set and we reviewed how to subtract fractions with different denominators using a common denominator. We focused on problem 2 (3/4 − 1/2), identifying a common denominator of 4 and rewriting 1/2 as 2/4 before subtracting. We also discussed showing only the specific step being worked on to support focusing on one part at a time.",
+  "stuck": "Completing the final subtraction step (3 − 2) after rewriting as 3/4 − 2/4",
   "next": "Finish problem 2 and then correct the other items that appear to have denominator/answer-format issues (e.g., problems 4, 6, and 8)."
  },
  {
@@ -45,6 +59,7 @@
   "session": "My week",
   "length_sec": 300,
   "summary": "The student shared a Grade 5 fractions worksheet and asked for feedback on what to work on. We reviewed why you can’t add denominators directly (e.g., 2/3 + 1/4) and practiced finding a common denominator by multiplying 3×4=12. The student requested step-by-step visual support for each step, and we started setting up problem 8 (pizza word problem) at the end.",
+  "stuck": "Converting 2/3 into twelfths (computing 2×4 correctly) and initially trying to add denominators (e.g., 3/7).",
   "next": "Practice several problems converting fractions to a common denominator (including word problems) and then simplifying the final answer."
  },
  {
@@ -53,6 +68,7 @@
   "session": "My week",
   "length_sec": 69,
   "summary": "The session focused on getting set up to share the student’s screen so the tutor could see the homework. No specific math problems were shown or worked on before the session ended.",
+  "stuck": "Finding/using the screen-share button to display the homework",
   "next": "Successfully share the homework screen and begin working through the first problem together."
  },
  {
@@ -61,6 +77,7 @@
   "session": "Lesson 2 · Adding fractions",
   "length_sec": 183,
   "summary": "We worked through the example 1/2 + 1/3 by finding a common denominator and converting each fraction to an equivalent fraction with denominator 6. The student practiced identifying the multiplication factor needed to reach the common denominator, then added the numerators to get the final sum.",
+  "stuck": "Figuring out what number to multiply 2 by to make 6 (needed counting-by-2s support), recalling the rule “add numerators, keep denominator” without a prompt",
   "next": "Do a few additional practice problems adding fractions with unlike denominators, including simplifying when possible."
  },
  {
@@ -69,6 +86,7 @@
   "session": "Lesson 2 · Adding fractions",
   "length_sec": 80,
   "summary": "We practiced listing multiples to find a common denominator, then choosing the least common denominator. We started converting 1/2 and 1/3 into equivalent fractions with denominator 6.",
+  "stuck": "Updating the numerator when multiplying the denominator to make an equivalent fraction.",
   "next": "Finish 1/2 + 1/3 by creating equivalent fractions with denominator 6 and then add; repeat with a few more unlike-denominator examples."
  },
  {
@@ -77,6 +95,7 @@
   "session": "Lesson 2 · Adding fractions",
   "length_sec": 5,
   "summary": "The session only included the tutor greeting and asking if the student was ready to start. There was no student work shown or discussed.",
+  "stuck": "Not enough information.",
   "next": "Start with finding least common denominators, then add/subtract and simplify."
  },
  {
@@ -85,6 +104,7 @@
   "session": "Lesson 2 · Adding fractions",
   "length_sec": 73,
   "summary": "We reviewed the steps for adding/subtracting fractions with different denominators. We started an example (1/2 + 1/3) and practiced finding a common denominator by listing multiples of 2 and 3.",
+  "stuck": "Identifying a common denominator for 2 and 3.",
   "next": "Continue the example through converting both fractions to the common denominator and adding the numerators, then try 2–3 more problems."
  },
  {
@@ -93,6 +113,7 @@
   "session": "Session",
   "length_sec": 535,
   "summary": "",
+  "stuck": "",
   "next": ""
  }
 ]
