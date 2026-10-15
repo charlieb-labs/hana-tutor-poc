@@ -1,5 +1,15 @@
 [
  {
+  "id": "c87d0ef1a259747f",
+  "when": "2026-10-15T16:57:09.355010Z",
+  "session": "My week",
+  "length_sec": 64,
+  "summary": "Sam shared a worksheet with six fraction addition/subtraction problems and asked for the tutor to check the answers. The tutor verified that problems 1, 3, and 5 were correct and noted that problems 2, 4, and 6 needed another look due to handling denominators. The tutor planned to start reworking problem 2 together.",
+  "stuck": "Keeping denominators consistent when subtracting fractions (problems 2, 4, and 6)",
+  "next": "Rework problems 2, 4, and 6 step-by-step and practice choosing common denominators.",
+  "pending": false
+ },
+ {
   "id": "cb8b0031004154f7",
   "when": "2026-10-15T01:00:35.802780Z",
   "session": "My week",
