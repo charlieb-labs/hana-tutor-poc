@@ -4,10 +4,10 @@
   "when": "2026-10-15T19:19:38.204085Z",
   "session": "My week",
   "length_sec": 51,
-  "summary": "",
-  "stuck": "",
-  "next": "",
-  "pending": true
+  "summary": "Sam shared a Grade 5 homework sheet with 6 fraction addition/subtraction problems. We checked his written answers against the list and identified which were correct vs. needed revision. We began to revisit subtraction problems where a common mistake is subtracting the numerator and denominator separately.",
+  "stuck": "Subtraction with unlike denominators (e.g., 3/4 − 1/2), specifically finding a common denominator and subtracting only the numerators.",
+  "next": "Practice subtracting fractions with unlike denominators and checking work for the “subtract top and bottom” mistake.",
+  "pending": false
  },
  {
   "id": "cd54e076f26fb492",
