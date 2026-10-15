@@ -7,3 +7,5 @@
 !.github/workflows/session-log.yml
 !scripts/
 !scripts/update_log.py
+!hana-loom.mp4
+!hana-loom.jpg
