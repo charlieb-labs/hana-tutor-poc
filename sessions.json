@@ -4,9 +4,10 @@
   "when": "2026-10-15T01:00:35.802780Z",
   "session": "My week",
   "length_sec": 249,
-  "summary": "",
-  "stuck": "",
-  "next": ""
+  "summary": "Reviewed a Grade 5 fractions worksheet (6 problems) and checked which answers were correct. Corrected problem #6 by rewriting 4/5 with a common denominator of 10 and then subtracting.",
+  "stuck": "Subtracting fractions by subtracting both numerators and denominators instead of making denominators match first",
+  "next": "Use the same common-denominator steps to fix problems #2 and #4 and then practice a few more subtraction examples.",
+  "pending": false
  },
  {
   "id": "c2f6ee9f827694d0",
