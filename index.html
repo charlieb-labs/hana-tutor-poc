@@ -173,24 +173,30 @@ p { margin: 0; }
 .topic.soon h3 { color: var(--muted); }
 .tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); border-radius: 999px; padding: 2px 8px; }
 .mode.week { background: var(--accent-soft); }
-.log { display: grid; border-top: 1px solid var(--ink); }
-.log-row { display: grid; grid-template-columns: 150px 150px 70px minmax(0, 1fr); gap: 16px; padding-block: 14px; border-bottom: 1px solid var(--line); font-size: 14px; align-items: start; }
-.log-row.head { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding-block: 10px; }
-.log-when, .log-len { font-family: var(--font-mono); font-size: 13px; font-variant-numeric: tabular-nums; }
-.log-type { font-weight: 600; }
-.log-sum { display: grid; gap: 6px; }
+.log { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); gap: 14px; }
+.log-card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; display: grid; gap: 12px; align-content: start; }
+.log-meta { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.log-pill { font-size: 13px; font-weight: 600; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); }
+.log-pill.week { background: var(--accent-soft); border-color: transparent; color: #9B2C40; }
+.log-when { font-family: var(--font-mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.log-card p { margin: 0; font-size: 14px; line-height: 1.5; display: grid; gap: 2px; }
+.log-card .lbl { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.log-stuck { color: var(--ink); }
+.log-stuck .lbl { color: var(--accent); }
 .log-next { color: var(--muted); }
-.log-next b { color: var(--ink); font-weight: 600; }
+.log-card.pending { background: transparent; border-style: dashed; }
+.log-card.pending .log-next { animation: pulse 1.6s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .log-card.pending .log-next { animation: none; } }
+@keyframes pulse { 50% { opacity: 0.45; } }
+.log-checked { margin: 0; font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.log-more { justify-self: start; font: inherit; font-family: var(--font-mono); font-size: 13px; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+.log-more:hover { color: var(--ink); border-color: var(--ink); }
 .log-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
 .log-stat { border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 12px 14px; display: grid; gap: 2px; }
 .log-stat .num { font-family: var(--font-mono); font-size: 24px; font-variant-numeric: tabular-nums; }
 .log-stat .cap { font-size: 13px; color: var(--muted); }
-.log-stuck b, .log-next b { color: var(--ink); font-weight: 600; }
 .log-empty { padding-block: 18px; color: var(--muted); }
 @media (max-width: 760px) {
-  .log-row { grid-template-columns: 1fr 1fr; gap: 6px 12px; }
-  .log-row.head { display: none; }
-  .log-sum { grid-column: 1 / -1; }
 }
 .why { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
 .risk { max-width: 70ch; font-size: 15px; color: var(--muted); border-left: 3px solid var(--accent); padding-left: 14px; }
@@ -380,7 +386,7 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
       <div class="item"><h3>What we agreed</h3><p>Prove it on one grade and one course first: Grade 5 fractions.</p></div>
       <div class="item"><h3>What the PoC tests</h3><p>Whether a face, on-screen questions and screen share keep a student engaged.</p></div>
     </div>
-    <p class="risk"><b>It can still get things wrong.</b> In testing, Hana once praised a wrong answer. A prompt rule fixed it, and it is why the parent recap is a draft a person reviews before it is sent.</p>
+    <p class="risk"><b>Hana can get things wrong.</b> In testing, she once praised a wrong answer. A prompt rule fixed it. The parent recap lands as a draft, so a person reads it before it goes to a parent.</p>
 
     <div class="journey-head">
       <h3>Customer journey</h3>
@@ -505,10 +511,12 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
     <div class="sec-head">
       <span class="eyebrow">Session log</span>
       <h2 id="log-h">Every session with Hana</h2>
-      <p class="muted">How the client would track the PoC. Each session is added automatically a few minutes after it ends. Sessions shown are tests, with me playing a Grade 5 student. Only the math recap appears here, never names or video.</p>
+      <p class="muted">How the client would track the PoC. Each session is added automatically a few minutes after it ends. Sessions shown are tests, with me playing a Grade 5 student. Setup calls and calls under a minute are left out. Only the math recap appears here, never names or video.</p>
     </div>
     <div class="log-stats" id="log-stats"></div>
     <div class="log" id="log-list"></div>
+    <button type="button" class="log-more" id="log-more" hidden></button>
+    <p class="log-checked" id="log-checked" aria-live="polite"></p>
   </section>
 
   </main>
@@ -583,6 +591,7 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
   // sessions.json is updated by a GitHub Action after each call.
   var LOG_URL = "https://raw.githubusercontent.com/charlieb-labs/hana-tutor-poc/main/sessions.json";
   var list = document.getElementById('log-list');
+  var checked = document.getElementById('log-checked');
   function fmtWhen(iso) {
     var d = new Date(String(iso).replace(/(\.\d{3})\d+/, '$1'));
     if (isNaN(d)) return iso;
@@ -618,52 +627,62 @@ footer .mono { font-family: var(--font-mono); font-size: 12px; }
       box.appendChild(d);
     });
   }
+  var SHOW = 6, showAll = false, last = [];
+  var more = document.getElementById('log-more');
+  more.addEventListener('click', function () { showAll = !showAll; render(last); });
+  function line(cls, label, text) {
+    var p = document.createElement('p');
+    p.className = cls;
+    p.appendChild(cell('lbl', label));
+    p.appendChild(document.createTextNode(text));
+    return p;
+  }
   function render(sessions) {
-    stats(sessions);
-    if (!sessions.length) { message('No sessions yet. Each session appears here a few minutes after it ends.'); return; }
+    last = sessions;
+    stats(sessions.filter(function (s) { return !s.pending; }));
+    if (!sessions.length) { more.hidden = true; message('No sessions yet. Each session appears here a few minutes after it ends.'); return; }
     list.innerHTML = '';
-    var head = document.createElement('div');
-    head.className = 'log-row head';
-    ['When', 'Session', 'Length', 'Where the student got stuck, and what is next'].forEach(function (t) { head.appendChild(cell('', t)); });
-    list.appendChild(head);
-    sessions.forEach(function (s) {
-      var row = document.createElement('div');
-      row.className = 'log-row';
-      row.appendChild(cell('log-when', fmtWhen(s.when)));
-      row.appendChild(cell('log-type', s.session || 'Session'));
-      row.appendChild(cell('log-len', fmtLen(s.length_sec)));
-      var sum = document.createElement('div');
-      sum.className = 'log-sum';
-      var stuck = document.createElement('div');
-      stuck.className = 'log-stuck';
-      var sb = document.createElement('b');
-      sb.textContent = 'Stuck on: ';
-      stuck.appendChild(sb);
-      stuck.appendChild(document.createTextNode(s.stuck || s.summary));
-      sum.appendChild(stuck);
-      if (s.next) {
-        var n = document.createElement('div');
-        n.className = 'log-next';
-        var b = document.createElement('b');
-        b.textContent = 'Next: ';
-        n.appendChild(b);
-        n.appendChild(document.createTextNode(s.next));
-        sum.appendChild(n);
+    var all = showAll || sessions.length <= SHOW + 2;
+    sessions.slice(0, all ? sessions.length : SHOW).forEach(function (s) {
+      var card = document.createElement('article');
+      card.className = 'log-card';
+      var meta = document.createElement('div');
+      meta.className = 'log-meta';
+      var pill = cell('log-pill' + (s.session === 'My week' ? ' week' : ''), s.session || 'Session');
+      meta.appendChild(pill);
+      meta.appendChild(cell('log-when', fmtWhen(s.when) + ' · ' + fmtLen(s.length_sec)));
+      card.appendChild(meta);
+      if (s.pending) {
+        card.classList.add('pending');
+        card.appendChild(line('log-next', 'Just ended', 'Recap being written. It appears here in a few minutes.'));
+      } else {
+        card.appendChild(line('log-stuck', 'Stuck on', s.stuck || s.summary));
+        if (s.next) card.appendChild(line('log-next', 'Next', s.next));
       }
-      row.appendChild(sum);
-      list.appendChild(row);
+      list.appendChild(card);
     });
+    more.hidden = sessions.length <= SHOW + 2;
+    more.textContent = showAll ? 'Show fewer' : 'Show all ' + sessions.length + ' sessions';
+  }
+  // Setup calls (getting screen share to work), not tutoring.
+  var HIDE = ['cc2c1f710a2bc4d5', 'caabad1415848422'];
+  function keep(s) {
+    if ((s.length_sec || 0) < 60 || HIDE.indexOf(s.id) >= 0) return false;
+    if (s.pending) return true;
+    if (!s.summary) return false;
+    return !/^(n\/a|not enough information)/i.test(s.stuck || '');
   }
   function load() {
     fetch(LOG_URL + '?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.json(); })
       .then(function (d) {
-        var rows = (Array.isArray(d) ? d : (d.sessions || [])).filter(function (s) { return s.summary; });
+        var rows = (Array.isArray(d) ? d : (d.sessions || [])).filter(keep);
         render(rows);
+        checked.textContent = 'Updates on its own. Last checked ' + new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) + '.';
       })
-      .catch(function () { if (!list.querySelector('.log-row')) message('The session log could not load right now.'); });
+      .catch(function () { if (!list.querySelector('.log-card')) message('The session log could not load right now.'); });
   }
   load();
-  setInterval(load, 60000);
+  setInterval(load, 30000);
 })();
 </script>
 
