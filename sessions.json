@@ -1,5 +1,15 @@
 [
  {
+  "id": "c493c5174582a4a4",
+  "when": "2026-10-15T19:21:15.652587Z",
+  "session": "My week",
+  "length_sec": 212,
+  "summary": "Sam shared a 6-problem fractions worksheet. We reviewed which items were correct and then worked through problem 6 step-by-step, focusing on using a common denominator instead of subtracting numerators/denominators separately. Sam converted 4/5 to 8/10 and completed 8/10 − 1/10 = 7/10.",
+  "stuck": "Subtracting fractions by subtracting the numerator and denominator separately (seen on problems 2, 4, and initial attempt on 6)",
+  "next": "Rework problems 2 and 4 using the same common-denominator method and simplify the final answers.",
+  "pending": false
+ },
+ {
   "id": "cf33262dbe83b49c",
   "when": "2026-10-15T19:19:38.204085Z",
   "session": "My week",
